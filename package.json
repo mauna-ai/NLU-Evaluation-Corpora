@@ -1,0 +1,25 @@
+{
+  "name": "nlu-evaluation-corpora",
+  "version": "1.0.0",
+  "description": "This project is a collection of three corpora which can be used for evaluating chatbots or other conversational interfaces. Two of the corpora were extracted from [StackExchange](https://data.stackexchange.com/), one from a Telegram chatbot.",
+  "main": "index.js",
+  "scripts": {
+    "repl": "local-repl",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mauna-ai/NLU-Evaluation-Corpora.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mauna-ai/NLU-Evaluation-Corpora/issues"
+  },
+  "homepage": "https://github.com/mauna-ai/NLU-Evaluation-Corpora#readme",
+  "dependencies": {
+    "got": "^11.8.0",
+    "local-repl": "^4.0.0",
+    "lodash": "^4.17.20"
+  }
+}
