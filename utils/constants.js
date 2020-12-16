@@ -21,11 +21,11 @@ const entityClasses = {
 };
 
 const entityClassToHolmesMapping = {
-  StationDest: "ENTITYFAC",
+  StationDest: "ENTITYGPE",
   Vehicle: "ENTITYPRODUCT",
   Criterion: "ENTITYNOUN",
-  StationStart: "ENTITYFAC",
-  Line: "ENTITYFAC",
+  StationStart: "ENTITYGPE",
+  Line: "ENTITYGPE",
   TimeStartTime: "ENTITYTIME",
   TimeEndTime: "ENTITYTIME",
   SoftwareName: "ENTITYPRODUCT",
