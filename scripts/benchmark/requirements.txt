@@ -1,2 +1,9 @@
 json-sempai==0.4.0
-typer
+tqdm
+torch==1.7.1
+transformers==4.1.1
+sentencepiece==0.1.94
+spacy==2.1.0
+holmes-extractor
+https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.1.0/en_core_web_md-2.1.0.tar.gz
+https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.1.0/en_core_web_lg-2.1.0.tar.gz
