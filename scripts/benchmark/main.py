@@ -6,6 +6,7 @@ from functools import reduce
 from tqdm import tqdm
 from jsonsempai import magic
 from model import Model
+from beautifultable import BeautifulTable
 import holmes_extractor as holmes
 import patches.holmes_extractor.semantics as semantics
 import ChatbotCorpus
@@ -75,19 +76,19 @@ class Matcher:
 
 
 def check_result(results, all_matches):
-    all_matches = []
+    res = []
     for result in results:
         matches = result.get("word_matches", [])
         if not matches:
             continue
-
-        all_matches.append(
+        
+        res.append(
             any(
                 [
                     " ".join(
                         [
                             m["search_phrase_word"].lower()
-                            for m in matches["word_matches"]
+                            for m in matches
                         ]
                     )
                     == match.lower()
@@ -96,7 +97,7 @@ def check_result(results, all_matches):
             )
         )
 
-    return any(all_matches)
+    return any(res)
 
 
 def find_ids(id_text, s):
@@ -174,6 +175,12 @@ def main(paraphrase: bool = True, large_model: bool = False, sentences: int = 0)
                 success += 1
                 break
         count += 1
+    table = BeautifulTable()
+    table.rows.append(["total sentences", count])
+    table.rows.append(["successful matches", success])
+    table.rows.append(["non-empty result found", non_empty_count])
+    table.rows.append(["query errors", errors])
+    print(table)
     logger.info(
         f"{success} successful out of {count}, non-empty result found: {non_empty_count}, query errors: {errors}"
     )
