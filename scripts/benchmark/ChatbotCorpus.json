@@ -295,7 +295,6 @@
             "templates": [
                 "how i can get from ENTITYGPE to ENTITYGPE",
                 "can you give me a connection from ENTITYGPE to ENTITYGPE?",
-                "depart in ENTITYGPE, i assume",
                 "when is the next ENTITYGPE leaving from ENTITYGPE?",
                 "when does the ENTITYNOUN come at ENTITYGPE",
                 "when is the ENTITYPRODUCT from ENTITYGPE?"
@@ -1522,7 +1521,6 @@
             "match": "ENTITYNOUN in ENTITYGPE",
             "templates": [
                 "ENTITYNOUN in ENTITYGPE",
-                "depart in ENTITYGPE, i assume",
                 "how do i get from ENTITYGPE to ENTITYGPE?",
                 "how can i get from ENTITYGPE to ENTITYGPE as ENTITYNOUN as possible?",
                 "can you give me a connection from ENTITYGPE to ENTITYGPE?",
@@ -2590,36 +2588,6 @@
         {
             "entities": [
                 {
-                    "text": "garching",
-                    "entityType": "StationStart",
-                    "holmesIdentifier": "ENTITYGPE"
-                }
-            ],
-            "training": false,
-            "inputs": [
-                "I assume you leave in garching.",
-                "I assume that you leave in garching.",
-                "I think you leave in garching.",
-                "I assume that they leave in garching.",
-                "I assume they leave in garching.",
-                "I assume that you depart in garching.",
-                "I assume you depart in garching.",
-                "I assume you leave in garching",
-                "depart in garching, i assume"
-            ],
-            "match": "depart in ENTITYGPE, i assume",
-            "templates": [
-                "depart in ENTITYGPE, i assume",
-                "or depart from ENTITYGPE",
-                "is there a ENTITYPRODUCT from ENTITYGPE to ENTITYGPE?",
-                "can you find a ENTITYPRODUCT from ENTITYGPE to ENTITYGPE?",
-                "ENTITYGPE to ENTITYGPE",
-                "how do i get from ENTITYGPE to ENTITYGPE?"
-            ]
-        },
-        {
-            "entities": [
-                {
                     "text": "u-bahn",
                     "entityType": "Vehicle",
                     "holmesIdentifier": "ENTITYPRODUCT"
@@ -3434,8 +3402,7 @@
                 "how can i get from ENTITYGPE to ENTITYGPE?",
                 "when does the ENTITYNOUN starts at ENTITYGPE?",
                 "when will the ENTITYNOUN depart from ENTITYGPE?",
-                "when does the ENTITYNOUN leaves at ENTITYGPE?",
-                "depart in ENTITYGPE, i assume"
+                "when does the ENTITYNOUN leaves at ENTITYGPE?"
             ]
         },
         {
@@ -3754,7 +3721,6 @@
                 "how can i get from ENTITYGPE to ENTITYGPE?",
                 "when does the ENTITYNOUN departs at ENTITYGPE?",
                 "when is the ENTITYPRODUCT leaving in ENTITYGPE",
-                "depart in ENTITYGPE, i assume",
                 "when is the ENTITYNOUN in ENTITYGPE?"
             ]
         },
@@ -4238,7 +4204,6 @@
             "templates": [
                 "how can i get from ENTITYGPE to ENTITYGPE?",
                 "how can i get to ENTITYGPE?",
-                "depart in ENTITYGPE, i assume",
                 "when does the ENTITYPRODUCT leaving in ENTITYGPE",
                 "when is the ENTITYNOUN in ENTITYGPE?",
                 "ENTITYNOUN from ENTITYGPE"
@@ -5188,7 +5153,6 @@
             "match": "when is the ENTITYNOUN leaving from ENTITYGPE?",
             "templates": [
                 "when is the ENTITYNOUN leaving from ENTITYGPE?",
-                "depart in ENTITYGPE, i assume",
                 "how to get from ENTITYGPE to ENTITYGPE",
                 "ENTITYGPE to ENTITYGPE",
                 "what's the ENTITYNOUN way from ENTITYGPE to ENTITYGPE?",
@@ -6156,7 +6120,6 @@
                 "from ENTITYGPE to ENTITYGPE",
                 "when is the ENTITYNOUN from ENTITYGPE to ENTITYGPE",
                 "when does the ENTITYNOUN starts at ENTITYGPE?",
-                "depart in ENTITYGPE, i assume",
                 "when the ENTITYNOUN in ENTITYGPE is leaving?",
                 "when does the ENTITYNOUN leaves at ENTITYGPE?"
             ]
@@ -6439,7 +6402,6 @@
                 "from ENTITYGPE to ENTITYGPE",
                 "take me from ENTITYGPE to ENTITYGPE",
                 "ENTITYNOUN from ENTITYGPE",
-                "depart in ENTITYGPE, i assume",
                 "when does the ENTITYNOUN departes from ENTITYGPE?"
             ]
         }
