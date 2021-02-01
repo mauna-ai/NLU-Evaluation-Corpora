@@ -10,6 +10,7 @@ from beautifultable import BeautifulTable
 import holmes_extractor as holmes
 import patches.holmes_extractor.semantics as semantics
 import ChatbotCorpus
+from textdistance import cosine
 
 
 logger = logging.getLogger("holmes_extractor")
@@ -75,24 +76,31 @@ class Matcher:
         return self.manager.match_search_phrases_against(entry=phrase)
 
 
-def check_result(results, all_matches):
+def is_match(phrase1, phrase2, threshold=0.75):
+    similarity = cosine.normalized_similarity(phrase1, phrase2)
+
+    return (similarity >= threshold)
+
+def check_result(results, all_matches, threshold=0.75):
     res = []
     for result in results:
         matches = result.get("word_matches", [])
         if not matches:
             continue
-        
+
         res.append(
             any(
                 [
-                    " ".join(
-                        [
-                            m["search_phrase_word"].lower()
-                            for m in matches
-                        ]
-                    )
-                    == match.lower()
-                    for match in all_matches
+                    is_match(
+                        " ".join(
+                            [
+                                m["search_phrase_word"].lower()
+                                for m in matches
+                            ]
+                        ),
+                        match.lower(),
+                        threshold=threshold
+                    ) for match in all_matches
                 ]
             )
         )
@@ -139,9 +147,9 @@ def create_search_phrases(model, phrases):
     return result
 
 
-def main(paraphrase: bool = True, large_model: bool = False, sentences: int = 0):
-    model = Model("tuner007/pegasus_paraphrase")
-    model.prepare()
+def main(paraphrase: bool = True, large_model: bool = False, sentences: int = 0, threshold: float = 0.75):
+    model = paraphrase and Model("tuner007/pegasus_paraphrase")
+    paraphrase and model.prepare()
 
     logger.info("-" * 120)
     success, count, errors, non_empty_count = 0, 0, 0, 0
@@ -171,7 +179,8 @@ def main(paraphrase: bool = True, large_model: bool = False, sentences: int = 0)
                 errors += 1
                 logger.exception(e)
                 continue
-            if check_result(result, create_search_phrases(model, [sentence.match])):
+            search_phrases = create_search_phrases(model, [sentence.match]) if paraphrase else [sentence.match]
+            if check_result(result, search_phrases, threshold=threshold):
                 success += 1
                 break
         count += 1
