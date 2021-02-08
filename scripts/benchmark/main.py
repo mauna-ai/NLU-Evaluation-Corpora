@@ -136,7 +136,7 @@ def check_entities(src_phrase, dst_phrase):
     return sorted([e.strip() for e in src_ents]) == sorted(dst_ents), normalized
 
 
-def create_search_phrases(model, phrases):
+def create_paraphrases(model, phrases):
     result = []
     for phrase in phrases:
         result.append(phrase)
@@ -147,9 +147,11 @@ def create_search_phrases(model, phrases):
     return result
 
 
-def main(paraphrase: bool = True, large_model: bool = False, sentences: int = 0, threshold: float = 0.75):
-    model = paraphrase and Model("tuner007/pegasus_paraphrase")
-    paraphrase and model.prepare()
+def main(paraphrase_search_phrases: bool = False, paraphrase_input: bool = False, large_model: bool = False, sentences: int = 0, threshold: float = 0.75):
+    model = None
+    if paraphrase_search_phrases or paraphrase_input:
+        model = Model("tuner007/pegasus_paraphrase")
+        model.prepare()
 
     logger.info("-" * 120)
     success, count, errors, non_empty_count = 0, 0, 0, 0
@@ -162,26 +164,30 @@ def main(paraphrase: bool = True, large_model: bool = False, sentences: int = 0,
         else ChatbotCorpus.sentences[:sentences]
     )
     for sentence in tqdm(sent_iter):
-        if paraphrase:
-            search_phrases = ", ".join(
-                [f'"{s}"' for s in create_search_phrases(model, sentence.templates)]
-            )
+        if paraphrase_search_phrases:
+            search_phrases = create_paraphrases(model, sentence.templates)
         else:
             search_phrases = sentence.templates
 
         for input_ in sentence.inputs:
-            try:
-                result = matcher.match_phrase(search_phrases, input_)
-                if result:
-                    non_empty_count += 1
-                    logger.debug(f"Non-empty result found: {pformat(result)}")
-            except Exception as e:
-                errors += 1
-                logger.exception(e)
-                continue
-            search_phrases = create_search_phrases(model, [sentence.match]) if paraphrase else [sentence.match]
-            if check_result(result, search_phrases, threshold=threshold):
-                success += 1
+            inp_phrases = create_paraphrases(model, [input_]) if paraphrase_input else [input_]
+            found = False
+            for inp in inp_phrases:
+                try:
+                    result = matcher.match_phrase(search_phrases, inp)
+                    if result:
+                        non_empty_count += 1
+                        logger.debug(f"Non-empty result found: {pformat(result)}")
+                except Exception as e:
+                    errors += 1
+                    logger.exception(e)
+                    continue
+                search_phrases = create_paraphrases(model, [sentence.match]) if paraphrase_search_phrases else [sentence.match]
+                if check_result(result, search_phrases, threshold=threshold):
+                    success += 1
+                    found = True
+                    break
+            if found:
                 break
         count += 1
     table = BeautifulTable()
